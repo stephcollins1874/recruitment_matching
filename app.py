@@ -40,8 +40,62 @@ if page == "Home":
     )
 
 elif page == "Members":
-    st.header("Members")
-    st.info("Member database coming soon!")
+    st.header("👩 Members")
+
+    if "members" not in st.session_state:
+        st.session_state.members = []
+
+    with st.form("member_form"):
+        name = st.text_input("Member Name")
+
+        group = st.selectbox(
+            "Bump Group",
+            ["A", "B", "C", "D"]
+        )
+
+        can_pickup = st.checkbox(
+            "Can Pick Up"
+        )
+
+        can_pickup_two = st.checkbox(
+            "Can Pick Up 2 PNMs"
+        )
+
+        initiator = st.checkbox(
+            "Initiates Bump"
+        )
+
+        submitted = st.form_submit_button(
+            "Add Member"
+        )
+
+        if submitted:
+            st.session_state.members.append(
+                {
+                    "Name": name,
+                    "Group": group,
+                    "Can Pick Up": can_pickup,
+                    "Can Pick Up 2": can_pickup_two,
+                    "Initiator": initiator
+                }
+            )
+
+            st.success(
+                f"{name} added!"
+            )
+
+    st.divider()
+
+    st.subheader("Current Members")
+
+    if st.session_state.members:
+        st.dataframe(
+            st.session_state.members
+        )
+    else:
+        st.info(
+            "No members added yet."
+        )
 
 elif page == "PNMs":
     st.header("PNMs")
