@@ -104,8 +104,64 @@ elif page == "Members":
         )
 
 elif page == "PNMs":
-    st.header("PNMs")
-    st.info("PNM database coming soon!")
+    st.header("🎀 PNMs")
+
+    if "pnms" not in st.session_state:
+        st.session_state.pnms = []
+
+    with st.form("pnm_form"):
+
+        name = st.text_input("PNM Name")
+
+        major = st.text_input("Major")
+
+        hometown = st.text_input("Hometown")
+
+        interests = st.text_area(
+            "Activities / Interests"
+        )
+
+        notes = st.text_area(
+            "Notes"
+        )
+
+        submitted = st.form_submit_button(
+            "Add PNM"
+        )
+
+        if submitted:
+            st.session_state.pnms.append(
+                {
+                    "Name": name,
+                    "Major": major,
+                    "Hometown": hometown,
+                    "Interests": interests,
+                    "Notes": notes
+                }
+            )
+
+            st.success(
+                f"{name} added!"
+            )
+
+    st.divider()
+
+    st.subheader("Current PNMs")
+
+    if st.session_state.pnms:
+        st.dataframe(
+            st.session_state.pnms
+        )
+
+        if st.button("Clear All PNMs"):
+            st.session_state.pnms = []
+            st.success("All PNMs removed.")
+            st.rerun()
+
+    else:
+        st.info(
+            "No PNMs added yet."
+        )
 
 elif page == "Bump Groups":
     st.header("Bump Groups")
