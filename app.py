@@ -88,20 +88,20 @@ elif page == "Members":
 
     st.subheader("Current Members")
 
-if st.session_state.members:
-    st.dataframe(
-        st.session_state.members
-    )
+    if st.session_state.members:
+        st.dataframe(
+            st.session_state.members
+        )
 
-    if st.button("Clear All Members"):
-        st.session_state.members = []
-        st.success("All members removed.")
-        st.rerun()
+        if st.button("Clear All Members"):
+            st.session_state.members = []
+            st.success("All members removed.")
+            st.rerun()
 
-else:
-    st.info(
-        "No members added yet."
-    )
+    else:
+        st.info(
+            "No members added yet."
+        )
 
 elif page == "PNMs":
     st.header("PNMs")
